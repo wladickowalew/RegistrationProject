@@ -79,7 +79,10 @@ public class AutorizationWindow extends JFrame {
     }
 
     private void enterClick(ActionEvent e) {
-        System.out.println("Enter Click!");
+        MainWindow window = new MainWindow();
+        window.run();
+        setVisible(false); //you can't see me!
+        dispose(); //Destroy the JFrame object
     }
 
 }
