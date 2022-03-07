@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 public class AutorizationWindow extends JFrame {
 
@@ -83,6 +84,30 @@ public class AutorizationWindow extends JFrame {
     }
 
     private void enterClick(ActionEvent e) {
+        if (! validateFields()){
+            JOptionPane.showMessageDialog(null, "Не все поля заполнены");
+            return;
+        }
+        try {
+            String login = loginTF.getText();
+            String password = String.valueOf(passwordTF.getPassword());
+            if (DBconnector.autorization(login, password))
+                toMainScreen();
+            else
+                JOptionPane.showMessageDialog(null, "Нет такой пары логи.пароль");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Неизвестная ошибка регистрации");
+        }
+
+    }
+
+    private boolean validateFields(){
+        String login = loginTF.getText();
+        String password = String.valueOf(passwordTF.getPassword());
+        return  ! (login.trim().isEmpty() || password.trim().isEmpty());
+    }
+
+    private void toMainScreen(){
         MainWindow window = new MainWindow();
         window.run();
         setVisible(false);

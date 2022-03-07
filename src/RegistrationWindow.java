@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 public class RegistrationWindow extends JFrame {
 
@@ -121,7 +122,38 @@ public class RegistrationWindow extends JFrame {
     }
 
     private void regClick(ActionEvent e) {
-        System.out.println("Reg Click!");
+        User user = validateFields();
+        if (user == null) {
+            JOptionPane.showMessageDialog(null, "Ошибка заполнения полей");
+            return;
+        }
+        try {
+            DBconnector.addUser(user);
+            backClick(null);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Такой пользователь уже существует");
+        }
+    }
+
+    private User validateFields(){
+        String login = loginTF.getText();
+        String password = String.valueOf(passwordTF.getPassword());
+        String repeat_password = String.valueOf(repeat_passwordTF.getPassword());
+        String name = nameTF.getText();
+        String age_text = ageTF.getText();
+        String profession = professionTF.getText();
+        if (login.trim().isEmpty() || name.trim().isEmpty()
+                || age_text.trim().isEmpty() || profession.trim().isEmpty())
+            return null;
+        int age = 0;
+        try {
+            age = Integer.parseInt(age_text);
+        }catch (Exception e){
+            return null;
+        }
+        if (!(password.equals(password) && password.length() > 5))
+            return null;
+        return new User(login, password,name, profession, age);
     }
 
     private void backClick(ActionEvent e) {
