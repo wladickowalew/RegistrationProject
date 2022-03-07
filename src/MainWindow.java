@@ -18,6 +18,7 @@ public class MainWindow extends JFrame {
         addWidgets();
         getContentPane().add(panel);
         pack();
+        setLocation(300, 200);
     }
 
     public void run(){

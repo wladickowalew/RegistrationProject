@@ -20,6 +20,7 @@ public class AutorizationWindow extends JFrame {
         addWidgets();
         getContentPane().add(panel);
         pack();
+        setLocation(300, 300);
     }
 
     public void run(){
@@ -75,14 +76,17 @@ public class AutorizationWindow extends JFrame {
     }
 
     private void regClick(ActionEvent e) {
-        System.out.println("Reg Click!");
+        RegistrationWindow window = new RegistrationWindow();
+        window.run();
+        setVisible(false);
+        dispose();
     }
 
     private void enterClick(ActionEvent e) {
         MainWindow window = new MainWindow();
         window.run();
-        setVisible(false); //you can't see me!
-        dispose(); //Destroy the JFrame object
+        setVisible(false);
+        dispose();
     }
 
 }
