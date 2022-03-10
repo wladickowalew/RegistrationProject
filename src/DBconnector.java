@@ -16,6 +16,7 @@ public class DBconnector {
 
     public static void createTables() throws ClassNotFoundException, SQLException {
         createUserTable();
+        createNewsTable();
     }
 
     private static void createUserTable() throws ClassNotFoundException, SQLException {
@@ -31,7 +32,22 @@ public class DBconnector {
                 "    profession VARCHAR (30) DEFAULT No_Profession\n" +
                 ");");
 
-        System.out.println("Таблица создана или уже существует.");
+        System.out.println("Таблица users создана или уже существует.");
+    }
+
+    private static void createNewsTable() throws ClassNotFoundException, SQLException {
+        statmt.execute("CREATE TABLE IF NOT EXISTS news (\n" +
+                "    id        INTEGER       PRIMARY KEY AUTOINCREMENT\n" +
+                "                            UNIQUE\n" +
+                "                            NOT NULL,\n" +
+                "    title     VARCHAR (100) NOT NULL,\n" +
+                "    text      TEXT          NOT NULL,\n" +
+                "    user_id   INTEGER       REFERENCES users (id),\n" +
+                "    private   BOOLEAN       DEFAULT (0),\n" +
+                "    date_time DATETIME      NOT NULL\n" +
+                ");");
+
+        System.out.println("Таблица news создана или уже существует.");
     }
 
     public static void addUser(User user) throws SQLException {
