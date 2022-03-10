@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDate;
 
 public class DBconnector {
 
@@ -67,5 +68,15 @@ public class DBconnector {
             return i == 1;
     }
 
+    public static News[] getNews(){
+        News[] ans = {
+                new News(1, "title1", "text1", 1, false, LocalDate.now()),
+                new News(2, "title2", "text2", 2, true, LocalDate.now()),
+                new News(3, "title3", "text3", 3, false, LocalDate.now()),
+                new News(4, "title4", "text4", 2, true, LocalDate.now()),
+                new News(5, "title5", "text5", 1, false, LocalDate.now())
+        };
+        return ans;
+    }
 
 }
