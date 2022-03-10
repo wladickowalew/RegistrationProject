@@ -1,3 +1,5 @@
+import java.util.Locale;
+
 public class User {
     private String login;
     private String password;
@@ -6,7 +8,7 @@ public class User {
     private int age;
 
     public User(String login, String password, String name, String profession, int age) {
-        this.login = login;
+        this.login = login.toLowerCase();
         this.password = password;
         this.name = name;
         this.profession = profession;

@@ -40,8 +40,8 @@ public class DBconnector {
 
     public static boolean autorization(String login, String password) throws SQLException {
         String query = "SELECT * FROM users " +
-                "WHERE 'login' = '" + login + "' AND " +
-                "'password' = '" + password + "';";
+                "WHERE login = '" + login + "' AND " +
+                "password = '" + password + "';";
         System.out.println(query);
             resSet = statmt.executeQuery(query);
             int i = 0;

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class AutorizationWindow extends JFrame {
 
@@ -89,7 +90,7 @@ public class AutorizationWindow extends JFrame {
             return;
         }
         try {
-            String login = loginTF.getText();
+            String login = loginTF.getText().toLowerCase();
             String password = String.valueOf(passwordTF.getPassword());
             if (DBconnector.autorization(login, password))
                 toMainScreen();
