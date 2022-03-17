@@ -1,3 +1,6 @@
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class News {
@@ -6,15 +9,28 @@ public class News {
     private String text;
     private int user_id;
     private boolean privat;
-    private LocalDate data_time;
+    private Date data_time;
 
-    public News(int id, String title, String text, int user_id, boolean privat, LocalDate data_time) {
+    public News(int id, String title, String text, int user_id, boolean privat, Date data_time) {
         this.id = id;
         this.title = title;
         this.text = text;
         this.user_id = user_id;
         this.privat = privat;
         this.data_time = data_time;
+    }
+
+    public News(ResultSet rs){
+        try {
+            this.id = rs.getInt("id");
+            this.title = rs.getString("id");
+            this.text = rs.getString("text");
+            this.user_id = rs.getInt("user_id");
+            this.privat = rs.getBoolean("private");
+            this.data_time = rs.getDate("date_time");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     // getters and setters
@@ -59,11 +75,11 @@ public class News {
         this.privat = privat;
     }
 
-    public LocalDate getData_time() {
+    public Date getData_time() {
         return data_time;
     }
 
-    public void setData_time(LocalDate data_time) {
+    public void setData_time(Date data_time) {
         this.data_time = data_time;
     }
 }
