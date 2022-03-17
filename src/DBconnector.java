@@ -56,6 +56,10 @@ public class DBconnector {
         statmt.execute(user.getInsertQuery());
     }
 
+    public static void addNews(News news) throws SQLException {
+        statmt.execute(news.getInsertQuery());
+    }
+
     public static boolean autorization(String login, String password) throws SQLException {
         String query = "SELECT * FROM users " +
                 "WHERE login = '" + login + "' AND " +
@@ -73,18 +77,10 @@ public class DBconnector {
         String query = "SELECT * FROM news;";
         System.out.println(query);
         resSet = statmt.executeQuery(query);
-        int i = 0;
         ArrayList<News> list = new ArrayList<>();
         while(resSet.next())
             list.add(new News(resSet));
         return list;
-        //        News[] ans = {
-//                new News(1, "title1", "text1", 1, false, LocalDate.now()),
-//                new News(2, "title2", "text2", 2, true, LocalDate.now()),
-//                new News(3, "title3", "text3", 3, false, LocalDate.now()),
-//                new News(4, "title4", "text4", 2, true, LocalDate.now()),
-//                new News(5, "title5", "text5", 1, false, LocalDate.now())
-//        };
     }
 
 }

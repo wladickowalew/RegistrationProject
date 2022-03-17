@@ -1,7 +1,6 @@
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class News {
     private int id;
@@ -20,6 +19,15 @@ public class News {
         this.data_time = data_time;
     }
 
+    public News(String title, String text, int user_id, boolean privat) {
+        this.id = -1;
+        this.title = title;
+        this.text = text;
+        this.user_id = user_id;
+        this.privat = privat;
+        this.data_time = new Date(System.currentTimeMillis());;
+    }
+
     public News(ResultSet rs){
         try {
             this.id = rs.getInt("id");
@@ -31,6 +39,15 @@ public class News {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public String getInsertQuery(){
+        String query = "INSERT INTO 'news' ('title', 'text', 'user_id', 'private', 'date_time') " +
+                "VALUES ('" + this.title + "', '" + this.text + "', '" + this.user_id +
+                "', " + (this.privat ? 1 : 0)+
+                ", '" + this.data_time + "');";
+        System.out.println(query);
+        return query;
     }
 
     // getters and setters

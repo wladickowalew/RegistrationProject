@@ -57,6 +57,16 @@ public class MainWindow extends JFrame {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        JButton backBTN = new JButton("Добавить новость");
+        backBTN.setBounds(600, 550, 200, 25);
+        backBTN.addActionListener(e -> showAddNews());
+        panel.add(backBTN);
+    }
+
+    private void showAddNews(){
+        AddNews window = new AddNews();
+        window.run();
     }
 
 }
