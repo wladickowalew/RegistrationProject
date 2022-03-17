@@ -69,15 +69,15 @@ public class DBconnector {
         return i == 1;
     }
 
-    public static News[] getNews() throws SQLException {
+    public static ArrayList<News> getNews() throws SQLException {
         String query = "SELECT * FROM news;";
         System.out.println(query);
         resSet = statmt.executeQuery(query);
         int i = 0;
-        ArrayList <News> list = new ArrayList<>();
+        ArrayList<News> list = new ArrayList<>();
         while(resSet.next())
             list.add(new News(resSet));
-        return (News[]) list.toArray();
+        return list;
         //        News[] ans = {
 //                new News(1, "title1", "text1", 1, false, LocalDate.now()),
 //                new News(2, "title2", "text2", 2, true, LocalDate.now()),

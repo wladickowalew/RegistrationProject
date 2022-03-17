@@ -23,7 +23,7 @@ public class News {
     public News(ResultSet rs){
         try {
             this.id = rs.getInt("id");
-            this.title = rs.getString("id");
+            this.title = rs.getString("title");
             this.text = rs.getString("text");
             this.user_id = rs.getInt("user_id");
             this.privat = rs.getBoolean("private");
