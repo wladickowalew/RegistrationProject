@@ -6,14 +6,18 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements addNewsCallback{
 
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
     private JPanel panel;
+    private User currentUser;
+    JTable table;
+    TableModel model;
 
-    public MainWindow(){
+    public MainWindow(User user){
         super();
+        this.currentUser = user;
         setTitle("Главное окно");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -46,27 +50,48 @@ public class MainWindow extends JFrame {
 
         String data[][] = new String[0][];
         try {
-            data = convertNewsToStrings(DBconnector.getNews());
+            data = convertNewsToStrings(DBconnector.getNews(currentUser));
             String columns[] = {"id","Заголовок","Текст новости", "Скрытая"};
-            TableModel model = new DefaultTableModel(data, columns);
+            model = new DefaultTableModel(data, columns);
             //model.addTableModelListener(this);
-            JTable table = new JTable(model);
+            table = new JTable(model);
             JScrollPane tableWithScroll = new JScrollPane(table);
-            tableWithScroll.setBounds(5, 5, 740, 500);
+            tableWithScroll.setBounds(5, 80, 790, 515);
             panel.add(tableWithScroll);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        JButton backBTN = new JButton("Добавить новость");
-        backBTN.setBounds(600, 550, 200, 25);
-        backBTN.addActionListener(e -> showAddNews());
-        panel.add(backBTN);
+        JLabel nameLBL = new JLabel(currentUser.getName());
+        nameLBL.setBounds(15, 25, 150, 25);
+        panel.add(nameLBL);
+
+        JButton addBTN = new JButton("Добавить новость");
+        addBTN.setBounds(300, 25, 200, 25);
+        addBTN.addActionListener(e -> showAddNews());
+        panel.add(addBTN);
+
+        JButton logoutBTN = new JButton("Выйти");
+        logoutBTN.setBounds(520, 25, 100, 25);
+        logoutBTN.addActionListener(e -> logout());
+        panel.add(logoutBTN);
+    }
+
+    private void logout() {
+        AutorizationWindow window = new AutorizationWindow();
+        window.run();
+        setVisible(false);
+        dispose();
     }
 
     private void showAddNews(){
-        AddNews window = new AddNews();
+        AddNews window = new AddNews(currentUser);
+        window.registerCallBack(this);
         window.run();
     }
 
+    @Override
+    public void news_added() {
+        System.out.println("Новость добавлена");
+    }
 }

@@ -92,12 +92,10 @@ public class AutorizationWindow extends JFrame {
         try {
             String login = loginTF.getText().toLowerCase();
             String password = String.valueOf(passwordTF.getPassword());
-            if (DBconnector.autorization(login, password))
-                toMainScreen();
-            else
-                JOptionPane.showMessageDialog(null, "Нет такой пары логи.пароль");
+            User user = DBconnector.autorization(login, password);
+            toMainScreen(user);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Неизвестная ошибка регистрации");
+            JOptionPane.showMessageDialog(null, "Ошибка регистрации");
         }
 
     }
@@ -108,8 +106,8 @@ public class AutorizationWindow extends JFrame {
         return  ! (login.trim().isEmpty() || password.trim().isEmpty());
     }
 
-    private void toMainScreen(){
-        MainWindow window = new MainWindow();
+    private void toMainScreen(User user){
+        MainWindow window = new MainWindow(user);
         window.run();
         setVisible(false);
         dispose();

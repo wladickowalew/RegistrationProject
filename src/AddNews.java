@@ -12,8 +12,12 @@ public class AddNews extends JFrame {
     private JCheckBox privateCB;
     private JPanel panel;
 
-    public AddNews(){
+    private User user;
+    public addNewsCallback callback;
+
+    public AddNews(User user){
         super();
+        this.user = user;
         setTitle("Добавление новости");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -23,6 +27,10 @@ public class AddNews extends JFrame {
         getContentPane().add(panel);
         pack();
         setLocation(300, 200);
+    }
+
+    public void registerCallBack(addNewsCallback callback){
+        this.callback = callback;
     }
 
     public void run(){
@@ -90,6 +98,7 @@ public class AddNews extends JFrame {
         }
         try {
             DBconnector.addNews(news);
+            callback.news_added();
             backClick(null);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Ошибка при записи в БД!");
@@ -103,8 +112,7 @@ public class AddNews extends JFrame {
 
         if (title.trim().isEmpty() || text.trim().isEmpty())
             return null;
-        int user_id = 1;
-        return new News(title, text, user_id, cb);
+        return new News(title, text, user.getId(), cb);
     }
 
     private void backClick(ActionEvent e) {

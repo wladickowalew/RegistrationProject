@@ -60,21 +60,19 @@ public class DBconnector {
         statmt.execute(news.getInsertQuery());
     }
 
-    public static boolean autorization(String login, String password) throws SQLException {
+    public static User autorization(String login, String password) throws SQLException {
         String query = "SELECT * FROM users " +
                 "WHERE login = '" + login + "' AND " +
                 "password = '" + password + "';";
         System.out.println(query);
         resSet = statmt.executeQuery(query);
-        int i = 0;
-        while(resSet.next()) {
-            i++;
-        }
-        return i == 1;
+        User user = new User(resSet);
+        return user;
     }
 
-    public static ArrayList<News> getNews() throws SQLException {
-        String query = "SELECT * FROM news;";
+    public static ArrayList<News> getNews(User user) throws SQLException {
+        String query = "SELECT * FROM news\n" +
+                "WHERE private = 0 OR user_id = " + user.getId();
         System.out.println(query);
         resSet = statmt.executeQuery(query);
         ArrayList<News> list = new ArrayList<>();

@@ -1,11 +1,23 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Locale;
 
 public class User {
+    private int id;
     private String login;
     private String password;
     private String name;
     private String profession;
     private int age;
+
+    public User(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("id");
+        this.login = rs.getString("login");
+        this.password = rs.getString("password");
+        this.name = rs.getString("name");
+        this.profession = rs.getString("profession");
+        this.age = rs.getInt("age");
+    }
 
     public User(String login, String password, String name, String profession, int age) {
         this.login = login.toLowerCase();
@@ -63,5 +75,13 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
