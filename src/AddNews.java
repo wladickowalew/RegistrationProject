@@ -66,9 +66,10 @@ public class AddNews extends JFrame {
         panel.add(textLBL);
 
         textTA = new JTextArea();
-        textTA.setBounds(15, 190, 355, 200);
         textTA.setFont(fontFields);
-        panel.add(textTA);
+        JScrollPane scroll = new JScrollPane(textTA);
+        scroll.setBounds(15, 190, 355, 200);
+        panel.add(scroll);
 
         privateCB = new JCheckBox("Только для меня");
         privateCB.setBounds(25, 400, 160, 25);

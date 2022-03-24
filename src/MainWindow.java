@@ -12,8 +12,9 @@ public class MainWindow extends JFrame implements addNewsCallback{
     private final int HEIGHT = 600;
     private JPanel panel;
     private User currentUser;
+    String[] columns;
     JTable table;
-    TableModel model;
+    DefaultTableModel model;
 
     public MainWindow(User user){
         super();
@@ -51,7 +52,7 @@ public class MainWindow extends JFrame implements addNewsCallback{
         String data[][] = new String[0][];
         try {
             data = convertNewsToStrings(DBconnector.getNews(currentUser));
-            String columns[] = {"id","Заголовок","Текст новости", "Скрытая"};
+            columns = new String[]{"id", "Заголовок", "Текст новости", "Скрытая"};
             model = new DefaultTableModel(data, columns);
             //model.addTableModelListener(this);
             table = new JTable(model);
@@ -92,6 +93,12 @@ public class MainWindow extends JFrame implements addNewsCallback{
 
     @Override
     public void news_added() {
-        System.out.println("Новость добавлена");
+        String[][] data = new String[0][];
+        try {
+            data = convertNewsToStrings(DBconnector.getNews(currentUser));
+            model.setDataVector(data, columns);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

@@ -25,7 +25,7 @@ public class News {
         this.text = text;
         this.user_id = user_id;
         this.privat = privat;
-        this.data_time = new Date(System.currentTimeMillis());;
+        this.data_time = new Date(System.currentTimeMillis());
     }
 
     public News(ResultSet rs){
